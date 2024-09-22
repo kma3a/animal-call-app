@@ -1,0 +1,22 @@
+{
+  "name": "animal-call-app",
+  "version": "1.0.0",
+  "description": "an app to play with data on animal noices",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "npm run build-electron && npm run copy-html && electron .",
+    "build-electron": "tsc --project tsconfig.json",
+    "copy-html": "cpy src/index.html dist --flat",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kelsey Ando",
+  "license": "ISC",
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.1"
+  },
+  "devDependencies": {
+    "electron": "^32.1.2",
+    "typescript": "~5.5.2",
+    "cpy-cli": "^5.0.0"
+  }
+}
