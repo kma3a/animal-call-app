@@ -1,7 +1,7 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 // import { enableLiveReload } from 'electron-compile';
-// import { getDataSource } from "./dbConnect";
-// import { Animals } from "./animal.schema";
+import { getDataSource } from "./data/dbConnect";
+import { Animals } from "./data/animal.schema";
 import path from 'path';
 
 
@@ -17,8 +17,8 @@ const createWindow = async () => {
   
 
   
-  // const dataSource = await getDataSource();
-  // const animalRepo = dataSource.getRepository(Animals);
+  const dataSource = await getDataSource();
+  const animalRepo = dataSource.getRepository(Animals);
 
   // Create the browser window.
   mainWindow = new BrowserWindow({
@@ -29,14 +29,14 @@ const createWindow = async () => {
     }
   });
 
-  // ipcMain.on('get-animals', async (event: any, ...args: any[]) => {
-  //   try {
-  //     console.log("getting animals");
-  //     event.returnValue = await animalRepo.find();
-  //   } catch (err) {
-  //     throw err;
-  //   }
-  // });
+  ipcMain.on('get-animals', async (event: any, ...args: any[]) => {
+    try {
+      console.log("getting animals");
+      event.returnValue = await animalRepo.find();
+    } catch (err) {
+      throw err;
+    }
+  });
 
   
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
