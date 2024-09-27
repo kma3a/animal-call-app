@@ -19,7 +19,6 @@ export default function ShowAnimals() {
   const [AnimalList, setAnimalList] = useState();
 
   useEffect(() => {
-    console.log("calliing useEffect")
     setAnimalList(window?.electron?.sendSync('get-animals'));
     console.log(AnimalList);
   }, [location.href]);
