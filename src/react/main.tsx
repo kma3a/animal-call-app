@@ -1,13 +1,10 @@
-
-import { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
+import ShowAnimals from "./animalList/showAnimals";
 
-function Greeting({ name }: { name: string }) {
-  return <h1>Hello, {name}</h1>;
-}
+
 
 export default function App() {
-  return <Greeting name="world" />
+  return <ShowAnimals />
 }
 
 const root = createRoot(document.getElementById('app'));

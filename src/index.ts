@@ -28,6 +28,7 @@ const createWindow = async () => {
     height: 600,
     width: 800,
     webPreferences: {
+      contextIsolation: true,
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
     }
   });
