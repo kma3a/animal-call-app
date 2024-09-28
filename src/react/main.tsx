@@ -1,10 +1,10 @@
 import { createRoot } from 'react-dom/client';
-import ShowAnimals from "./animalList/showAnimals";
+import AnimalsPage from "./animalList/AnimalsPage";
 
 
 
 export default function App() {
-  return <ShowAnimals />
+  return <AnimalsPage />
 }
 
 const root = createRoot(document.getElementById('app'));

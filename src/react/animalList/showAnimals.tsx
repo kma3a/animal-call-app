@@ -1,30 +1,24 @@
-import { useEffect,useState } from 'react';
 import { Animals } from '../../data/animal.schema';
 
 function ListItem({animal}: {animal: Animals}) {
   return <li key={animal.id}>
-    {animal.subspecies}
+    {animal.species} - {animal.subspecies} - {animal.binomial}
   </li>
 }
 
 
-function List({animals}: {animals: any[] }) {
+function List({animals}: {animals: Animals[] }) {
   let listItems = animals.map((animal) => <ListItem animal={animal}/>)
-  return <ul>{listItems}</ul>
+  return <ul key="animals">{listItems}</ul>
 }
 
 
 
-export default function ShowAnimals() {
-  const [AnimalList, setAnimalList] = useState();
-
-  useEffect(() => {
-    setAnimalList(window?.electron?.sendSync('get-animals'));
-    console.log(AnimalList);
-  }, [location.href]);
+export default function ShowAnimals({animalList}: {animalList: Animals[] }) {
+  
   return <>
       {
-        AnimalList ? <List animals={AnimalList} /> : <div> There is currently no animals found</div>
+        animalList ? <List animals={animalList} /> : <div> There is currently no animals found</div>
       }
     </>;
 }

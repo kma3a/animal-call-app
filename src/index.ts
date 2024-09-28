@@ -41,6 +41,16 @@ const createWindow = async () => {
     }
   });
 
+  ipcMain.on('add-animals', async (event: any, animal: Animals) => {
+    try {
+      const item = await animalRepo.create(animal);
+      await animalRepo.save(item);
+      event.returnValue = await animalRepo.find();
+    } catch (err) {
+      throw err;
+    }
+  });
+
   
   // mainWindow.loadFile(path.join(__dirname, '../renderer/main_window/index.html'));
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
