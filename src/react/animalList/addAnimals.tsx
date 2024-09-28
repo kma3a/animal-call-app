@@ -1,3 +1,4 @@
+import { LIMIT_ATTACHED } from "sqlite3";
 import { Animals } from "../..//data/animal.schema";
 
 interface AddAnimalsProps {
@@ -26,9 +27,18 @@ const AddAnimals = ({onSubmit, onToggle}: AddAnimalsProps) => {
 
   return <>
        <form onSubmit={handleSubmit}>
-        <input name="species"/>
-        <input name="subspecies"/>
-        <input name="binomial"/>
+        <label>
+          Species: 
+          <input name="species"/>
+        </label>
+        <label>
+          Subspecies:
+          <input name="subspecies"/>
+        </label>
+        <label>
+          Binomial:
+          <input name="binomial"/>
+        </label>
         <button type='submit'>Add Animal</button>
        </form>
     </>;
