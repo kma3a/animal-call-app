@@ -3,8 +3,6 @@ import {ShowAnimals } from './showAnimals';
 import { AddAnimals } from './addAnimals';
 import { Animals } from '../../data/animal.schema';
 
-type animalCallback = (list?: Animals[]) => void
-
 const AnimalsPage = () => {
   const [showAdd, setshowAdd] = useState(false);
   const [AnimalList, setAnimalList] = useState();
@@ -30,5 +28,4 @@ const AnimalsPage = () => {
 
 export {
   AnimalsPage,
-  animalCallback
 }

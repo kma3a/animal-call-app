@@ -1,7 +1,7 @@
-import { animalCallback } from "./AnimalsPage";
+import { Animals } from "../..//data/animal.schema";
 
 interface AddAnimalsProps {
-  onSubmit: animalCallback,
+  onSubmit: (list?: Animals[]) => void,
   onToggle: () => void
 }
 
