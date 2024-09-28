@@ -1,9 +1,9 @@
 import { createRoot } from 'react-dom/client';
-import AnimalsPage from "./animalList/AnimalsPage";
+import { AnimalsPage } from "./animalList/AnimalsPage";
 
 
 
-export default function App() {
+const App = () => {
   return <AnimalsPage />
 }
 

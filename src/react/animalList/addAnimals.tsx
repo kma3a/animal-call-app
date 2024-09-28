@@ -1,14 +1,21 @@
+import { animalCallback } from "./AnimalsPage";
 
-export default function ShowAnimals() {
+interface AddAnimalsProps {
+  onSubmit: animalCallback,
+  onToggle: () => void
+}
+
+const AddAnimals = ({onSubmit, onToggle}: AddAnimalsProps) => {
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();    console.log('You clicked submit.', e);
+    e.preventDefault();
     const newAnimal = {
       species: e.target[0].value.toLowerCase(),
       subspecies: e.target[1].value.toLowerCase(),
       binomial: e.target[2].value.toLowerCase(),
     }
     try {
-      window?.electron?.sendSync('add-animals', newAnimal)
+      onSubmit(window?.electron?.sendSync('add-animals', newAnimal));
+      onToggle();
     } catch (err) {
       console.log(err);
       //TODO handle error
@@ -25,4 +32,8 @@ export default function ShowAnimals() {
         <button type='submit'>Add Animal</button>
        </form>
     </>;
+}
+
+export {
+  AddAnimals
 }

@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
-import ShowAnimals from './showAnimals';
-import AddAnimals from './addAnimals';
+import {ShowAnimals } from './showAnimals';
+import { AddAnimals } from './addAnimals';
+import { Animals } from '../../data/animal.schema';
 
-export default function AnimalsPage() {
+type animalCallback = (list?: Animals[]) => void
+
+const AnimalsPage = () => {
   const [showAdd, setshowAdd] = useState(false);
   const [AnimalList, setAnimalList] = useState();
 
@@ -10,8 +13,9 @@ export default function AnimalsPage() {
     setshowAdd(!showAdd);
   }
 
-  const  updateAnimalList =  () => {
-    setAnimalList(window?.electron?.sendSync('get-animals'));
+  const updateAnimalList = (list?: Animals[]): void => {
+    const setList = list ?? window?.electron?.sendSync('get-animals')
+    setAnimalList(setList);
   }
 
   useEffect(() => {
@@ -19,7 +23,12 @@ export default function AnimalsPage() {
   }, [location.href]);
   
   return <>
-      { showAdd ? <AddAnimals  /> : <button onClick={togglesetshowAdd}>Add Item</button>}
+      { showAdd ? <AddAnimals onSubmit={updateAnimalList} onToggle={togglesetshowAdd}/> : <button onClick={togglesetshowAdd}>Add Item</button>}
       <ShowAnimals animalList={AnimalList}/>
     </>;
+}
+
+export {
+  AnimalsPage,
+  animalCallback
 }

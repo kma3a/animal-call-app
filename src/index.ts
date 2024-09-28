@@ -43,9 +43,10 @@ const createWindow = async () => {
 
   ipcMain.on('add-animals', async (event: any, animal: Animals) => {
     try {
-      const item = await animalRepo.create(animal);
-      await animalRepo.save(item);
+      const newAnimal = await animalRepo.create(animal);
+      await animalRepo.save(newAnimal);
       event.returnValue = await animalRepo.find();
+      console.log(event.returnValue);
     } catch (err) {
       throw err;
     }
