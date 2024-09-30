@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import {ShowAnimals } from './showAnimals';
 import { AddItems } from '../addItem/addItems';
 import { Animals } from '../../data/animal.schema';
+import { List } from '../list/list';
 
 const animalColumns = ["species", "subspecies", "binomial"];
 
@@ -28,7 +28,7 @@ const AnimalsPage = () => {
   
   return <>
       { showAdd ? <AddItems onSubmit={addAnimal}  columnList={animalColumns}/> : <button onClick={togglesetshowAdd}>Add Item</button>}
-      { AnimalList && <ShowAnimals animalList={AnimalList}/>}
+      { AnimalList ? <List list={AnimalList} className='animals' /> : <div> There is currently no animals found</div>}
     </>;
 }
 
