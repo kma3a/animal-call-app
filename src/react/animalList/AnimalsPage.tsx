@@ -26,13 +26,17 @@ const AnimalsPage = () => {
     updateAnimalList(window?.electron?.sendSync('delete-animal', id)); 
   }
 
+  const updateAnimal = (id: number, param: object) => {
+    updateAnimalList(window?.electron?.sendSync('update-animal', {id: id, param: param})); 
+  }
+
   useEffect(() => {
     updateAnimalList(); 
   }, [location.href]);
   
   return <>
       { showAdd ? <AddItems onSubmit={addAnimal}  columnList={animalColumns}/> : <button onClick={togglesetshowAdd}>Add Item</button>}
-      { AnimalList ? <List list={AnimalList} className='animals' onDelete={deleteAnimal} /> : <div> There is currently no animals found</div>}
+      { AnimalList ? <List list={AnimalList} className='animals' onDelete={deleteAnimal} onUpdate={updateAnimal} columnList={animalColumns}/> : <div> There is currently no animals found</div>}
     </>;
 }
 
