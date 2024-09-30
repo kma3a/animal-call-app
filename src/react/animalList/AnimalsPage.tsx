@@ -18,8 +18,12 @@ const AnimalsPage = () => {
     setAnimalList(setList);
   }
   const addAnimal = (newAnimal: object) => {
-    updateAnimalList(window?.electron?.sendSync('add-animals', newAnimal));
+    updateAnimalList(window?.electron?.sendSync('add-animal', newAnimal));
     togglesetshowAdd();
+  }
+
+  const deleteAnimal = (id: number) => {
+    updateAnimalList(window?.electron?.sendSync('delete-animal', id)); 
   }
 
   useEffect(() => {
@@ -28,7 +32,7 @@ const AnimalsPage = () => {
   
   return <>
       { showAdd ? <AddItems onSubmit={addAnimal}  columnList={animalColumns}/> : <button onClick={togglesetshowAdd}>Add Item</button>}
-      { AnimalList ? <List list={AnimalList} className='animals' /> : <div> There is currently no animals found</div>}
+      { AnimalList ? <List list={AnimalList} className='animals' onDelete={deleteAnimal} /> : <div> There is currently no animals found</div>}
     </>;
 }
 
