@@ -7,7 +7,7 @@ const connection = new DataSource({
   logging: true,
   logger: 'simple-console',
   database: './animal.sql',
-  entities: [Animals]
+  entities: [Animals],
 });
 
 connection.initialize()

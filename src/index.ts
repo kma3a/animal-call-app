@@ -33,8 +33,36 @@ const createWindow = async () => {
     }
   });
 
-  ipcMain.on('get-animals', async (event: any, ...args: any[]) => {
+  ipcMain.on('get-animals', async (event: any) => {
     try {
+      event.returnValue = await animalRepo.find();
+    } catch (err) {
+      throw err;
+    }
+  });
+
+  ipcMain.on('add-animal', async (event: any, animal: Animals) => {
+    try {
+      const newAnimal = await animalRepo.create(animal);
+      await animalRepo.save(newAnimal);
+      event.returnValue = await animalRepo.find();
+    } catch (err) {
+      throw err;
+    }
+  });
+
+  ipcMain.on('delete-animal', async (event: any, id: number) => {
+    try {
+      const newAnimal = await animalRepo.delete(id);
+      event.returnValue = await animalRepo.find();
+    } catch (err) {
+      throw err;
+    }
+  });
+
+  ipcMain.on('update-animal', async (event: any, args: {id: number, param: object}) => {
+    try {
+      const newAnimal = await animalRepo.update({id: args.id}, args.param);
       event.returnValue = await animalRepo.find();
     } catch (err) {
       throw err;
