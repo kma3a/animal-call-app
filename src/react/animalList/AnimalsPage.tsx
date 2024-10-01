@@ -35,7 +35,7 @@ const AnimalsPage = () => {
   }, [location.href]);
   
   return <>
-      { showAdd ? <AddItems onSubmit={addAnimal}  columnList={animalColumns} cancelAction={togglesetshowAdd}/> : <button onClick={togglesetshowAdd}>Add Item</button>}
+      { showAdd ? <AddItems onSubmit={addAnimal}  columnList={animalColumns} cancelAction={togglesetshowAdd}/> : <button onClick={togglesetshowAdd}>Add Animal</button>}
       { AnimalList ? <List list={AnimalList} className='animals' onDelete={deleteAnimal} onUpdate={updateAnimal} columnList={animalColumns}/> : <div> There is currently no animals found</div>}
     </>;
 }
