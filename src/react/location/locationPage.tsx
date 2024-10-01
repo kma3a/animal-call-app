@@ -35,8 +35,8 @@ const LocationPage = () => {
   }, [location.href]);
   
   return <>
-      { showAdd ? <AddItems onSubmit={addLocation}  columnList={locationColumns}/> : <button onClick={togglesetshowAdd}>Add Item</button>}
-      { LocationList ? <List list={LocationList} className='animals' onDelete={deleteLocation} onUpdate={updateLocation} columnList={locationColumns}/> : <div> There is currently no locations found</div>}
+      { showAdd ? <AddItems onSubmit={addLocation}  columnList={locationColumns} cancelAction={togglesetshowAdd}/> : <button onClick={togglesetshowAdd}>Add Item</button>}
+      { LocationList ? <List list={LocationList} className='locations' onDelete={deleteLocation} onUpdate={updateLocation} columnList={locationColumns}/> : <div> There is currently no locations found</div>}
     </>;
 }
 

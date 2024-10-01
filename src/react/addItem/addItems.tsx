@@ -2,9 +2,10 @@
 interface AddItemProps {
   onSubmit: (newItem: object) => void,
   columnList: string[],
+  cancelAction: () => void
 }
 
-const AddItems = ({onSubmit, columnList}: AddItemProps) => {
+const AddItems = ({onSubmit, columnList, cancelAction}: AddItemProps) => {
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -28,7 +29,9 @@ const AddItems = ({onSubmit, columnList}: AddItemProps) => {
           <input name={columnName}/>
         </label>)} 
        
-        <button type='submit'>Add Animal</button>
+        <button type='submit'>Add</button>
+
+        <button onClick={cancelAction}>Cancel</button>
        </form>
     </>;
 }
