@@ -2,7 +2,7 @@ import { app, BrowserWindow, ipcMain } from "electron";
 // import { enableLiveReload } from 'electron-compile';
 import { getDataSource } from "./data/dbConnect";
 import { Animals } from "./data/animal.schema";
-import path from 'path';
+import { Locations } from "./data/location.schema";
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -21,8 +21,7 @@ const createWindow = async () => {
 
   
   const dataSource = await getDataSource();
-  const animalRepo = dataSource.getRepository(Animals);
-
+  
   // Create the browser window.
   mainWindow = new BrowserWindow({
     height: 600,
@@ -32,7 +31,9 @@ const createWindow = async () => {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
     }
   });
-
+  
+  // Animal queries
+  const animalRepo = dataSource.getRepository(Animals);
   ipcMain.on('get-animals', async (event: any) => {
     try {
       event.returnValue = await animalRepo.find();
@@ -53,7 +54,7 @@ const createWindow = async () => {
 
   ipcMain.on('delete-animal', async (event: any, id: number) => {
     try {
-      const newAnimal = await animalRepo.delete(id);
+      await animalRepo.delete(id);
       event.returnValue = await animalRepo.find();
     } catch (err) {
       throw err;
@@ -62,8 +63,47 @@ const createWindow = async () => {
 
   ipcMain.on('update-animal', async (event: any, args: {id: number, param: object}) => {
     try {
-      const newAnimal = await animalRepo.update({id: args.id}, args.param);
+      await animalRepo.update({id: args.id}, args.param);
       event.returnValue = await animalRepo.find();
+    } catch (err) {
+      throw err;
+    }
+  });
+
+
+  // Location queries
+  const locationRepo = dataSource.getRepository(Locations);
+  ipcMain.on('get-locations', async (event: any) => {
+    try {
+      event.returnValue = await locationRepo.find();
+    } catch (err) {
+      throw err;
+    }
+  });
+
+  ipcMain.on('add-location', async (event: any, location: Locations) => {
+    try {
+      const newLocation = await locationRepo.create(location);
+      await locationRepo.save(newLocation);
+      event.returnValue = await locationRepo.find();
+    } catch (err) {
+      throw err;
+    }
+  });
+
+  ipcMain.on('delete-location', async (event: any, id: number) => {
+    try {
+      await locationRepo.delete(id);
+      event.returnValue = await locationRepo.find();
+    } catch (err) {
+      throw err;
+    }
+  });
+
+  ipcMain.on('update-location', async (event: any, args: {id: number, param: object}) => {
+    try {
+      await locationRepo.update({id: args.id}, args.param);
+      event.returnValue = await locationRepo.find();
     } catch (err) {
       throw err;
     }

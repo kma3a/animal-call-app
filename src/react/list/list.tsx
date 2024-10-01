@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Animals } from "../../data/animal.schema";
+import { Locations } from "../../data/location.schema";
 
 interface ListItemProps {
-  item: Animals,
+  item: Animals | Locations,
   classCatgory:string, 
   deleteFunction: (id:number) => void,
   updateFunction: (id:number,param: object) => void,
@@ -30,6 +31,7 @@ const ListItem = ({item,classCatgory, deleteFunction,updateFunction, columns}: L
     {
       !showUpdate ? <>
         { classCatgory === 'animals' && item.species + " - " +item.subspecies + " - " + item.binomial}
+        { classCatgory === 'locations' && item.name + " - " + item.GPSNorth + " - " + item.GPSWest}
         <button onClick={handleClick}>Delete</button>
         <button onClick={toggleUpdate}>Update</button>
       </>  : <>
