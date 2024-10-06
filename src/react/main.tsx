@@ -9,7 +9,6 @@ import Layout from './layout/layout';
 import { Global, css } from '@emotion/react'
 import { theme } from './styles/theme';
 
-
 const App = () => {
 
   const router = createBrowserRouter([
@@ -41,8 +40,9 @@ const App = () => {
 const root = createRoot(document.getElementById('app'));
       root.render(
         <>
-          <Global styles={{'body': theme}}></Global>
           <Global styles={css`body {
+            background-color: ${theme.background};
+            color: ${theme.primary};
             margin: 0;
             height: 100%;
           }`}>
