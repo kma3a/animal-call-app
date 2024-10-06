@@ -6,7 +6,8 @@ import { AnimalsPage } from "./animalList/AnimalsPage";
 import { LocationPage } from './location/locationPage';
 import { Home } from './home/home';
 import Layout from './layout/layout';
-
+import { Global, css } from '@emotion/react'
+import { theme } from './styles/theme';
 
 
 const App = () => {
@@ -38,4 +39,14 @@ const App = () => {
 }
 
 const root = createRoot(document.getElementById('app'));
-      root.render(<App />);
+      root.render(
+        <>
+          <Global styles={{'body': theme}}></Global>
+          <Global styles={css`body {
+            margin: 0;
+            height: 100%;
+          }`}>
+          </Global>
+          <App />
+        </>
+      );
