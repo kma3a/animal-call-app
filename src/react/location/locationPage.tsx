@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { AddItems } from '../addItem/addItems';
+import { AddItems } from '../addItem/AddItems';
 import { Animals } from '../../data/animal.schema';
-import { List } from '../list/list';
+import { List } from '../list/List';
 
 const locationColumns = ["name", "GPSNorth", "GPSWest"];
 
@@ -40,6 +40,4 @@ const LocationPage = () => {
     </>;
 }
 
-export {
-  LocationPage,
-}
+export default LocationPage;

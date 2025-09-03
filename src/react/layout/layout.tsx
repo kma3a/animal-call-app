@@ -1,19 +1,24 @@
-import { Outlet, Link } from "react-router-dom";
+import { css } from '@emotion/react'
+import { Outlet } from "react-router-dom";
+import { theme } from "../styles/theme";
+import NavBar from "./navBar/navBar";
+
+const menuItem = css`
+  background-color: ${theme.background};
+  color: ${theme.secondary};
+
+`;
 
 const Layout = () => {
   return (
     <>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/main_window">Home</Link>
-          </li>
-        </ul>
-      </nav>
+      <NavBar /> 
 
       <Outlet />
     </>
   )
 };
+
+
 
 export default Layout;

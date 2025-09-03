@@ -1,10 +1,9 @@
 import { createRoot } from 'react-dom/client';
-import * as React from "react";
-import * as ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider} from "react-router-dom";
-import { AnimalsPage } from "./animalList/AnimalsPage";
-import { LocationPage } from './location/locationPage';
+import * as React from 'react';
+import { createBrowserRouter, RouterProvider} from 'react-router-dom';
+import AnimalsPage from './animalList/AnimalsPage';
 import { CallPage } from './call/callPage';
+import LocationPage from './location/locationPage';
 import Layout from './layout/layout';
 import { Global, css } from '@emotion/react'
 import { theme } from './styles/theme';

@@ -3,12 +3,13 @@ const colors = {
   sandy: '#FCAA67',
   cream: '#FFFFC7',
   darkCyan: '#548687',
-  lavendar: '#C589E8',
+  lavender: '#C589E8',
 };
 
 
 export const theme = {
   background: colors.jet,
   primary: colors.sandy,
+  secondary: colors.darkCyan,
 
 }

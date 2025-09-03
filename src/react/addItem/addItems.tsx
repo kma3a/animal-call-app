@@ -10,7 +10,7 @@ const AddItems = ({onSubmit, columnList, cancelAction}: AddItemProps) => {
     e.preventDefault();
 
     let newItem = {};
-    columnList.forEach((item, index)=> newItem[item]=e.target[index].value.toLowerCase());
+    columnList.forEach((item, index)=> newItem[item] = e.target[index].value.toLowerCase());
 
     try {
       onSubmit(newItem);

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { AddItems } from '../addItem/addItems';
+import { AddItems } from '../addItem/AddItems';
 import { Animals } from '../../data/animal.schema';
-import { List } from '../list/list';
+import { List } from '../list/List';
 
 const animalColumns = ["species", "subspecies", "binomial"];
 
@@ -40,6 +40,4 @@ const AnimalsPage = () => {
     </>;
 }
 
-export {
-  AnimalsPage,
-}
+export default AnimalsPage;
