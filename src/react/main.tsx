@@ -4,7 +4,7 @@ import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
 import { AnimalsPage } from "./animalList/AnimalsPage";
 import { LocationPage } from './location/locationPage';
-import { Home } from './home/home';
+import { Home } from './home/Home';
 import Layout from './layout/layout';
 
 

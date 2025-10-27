@@ -30,8 +30,8 @@ const ListItem = ({item,classCatgory, deleteFunction,updateFunction, columns}: L
   return <li key={"item_"+ item.id}>
     {
       !showUpdate ? <>
-        { classCatgory === 'animals' && item.species + " - " +item.subspecies + " - " + item.binomial}
-        { classCatgory === 'locations' && item.name + " - " + item.GPSNorth + " - " + item.GPSWest}
+        { classCatgory === 'animals' && item.species + " | " +item.subspecies + " | " + item.binomial}
+        { classCatgory === 'locations' && item.name + " | " + item.GPSNorth + " | " + item.GPSWest}
         <button onClick={handleClick}>Delete</button>
         <button onClick={toggleUpdate}>Update</button>
       </>  : <>

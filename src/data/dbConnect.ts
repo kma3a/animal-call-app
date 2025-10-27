@@ -1,5 +1,7 @@
 import { Animals } from "./animal.schema";
 import { Locations } from "./location.schema";
+import { CallData } from "./callData.schema";
+import { Calls } from "./calls.schema";
 import { DataSource } from 'typeorm';
 
 const connection = new DataSource({
@@ -8,7 +10,7 @@ const connection = new DataSource({
   logging: true,
   logger: 'simple-console',
   database: './animal.sql',
-  entities: [Animals, Locations],
+  entities: [Animals, Locations, CallData, Calls],
 });
 
 connection.initialize()

@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Calls } from "./calls.schema"
 
 @Entity('Animals')
 export class Animals
@@ -6,12 +7,15 @@ export class Animals
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column()
+	@Column({nullable: false})
 	species: string;
 
-  @Column()
+  @Column({nullable: false})
 	subspecies: string;
 
   @Column()
 	binomial: string;
+
+	@OneToMany(() => Calls, (Calls) => Calls.animal)
+	calls: Calls[];
 }
