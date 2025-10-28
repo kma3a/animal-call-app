@@ -1,7 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { CallData } from "./callData.schema";
 import { Animals } from './animal.schema';
-import { Locations } from './location.schema';
 
 @Entity('Calls')
 export class Calls
@@ -14,9 +13,6 @@ export class Calls
 
   @ManyToOne(() => Animals, (Animals) => Animals.calls)
 	animal: Animals;
-
-  @ManyToOne(() => Locations, (Locations) => Locations.calls)
-	location: Locations;
 
   @Column()
   callCount: number;

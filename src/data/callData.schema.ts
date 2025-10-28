@@ -1,5 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, Timestamp } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';
 import { Calls } from "./calls.schema";
+import { Locations } from './location.schema';
+
 
 @Entity('CallData')
 export class CallData
@@ -9,6 +11,9 @@ export class CallData
 
 	@Column()
 	date: Date;
+
+  @ManyToOne(() => Locations, (Locations) => Locations.callData)
+	location: Locations;
 
   @Column('time', {name: 'startTime'})
 	startTime: Date;

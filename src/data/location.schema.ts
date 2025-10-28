@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Calls } from './calls.schema';
+import { CallData } from './callData.schema';
 
 @Entity('Locations')
 export class Locations
@@ -16,6 +16,6 @@ export class Locations
   @Column({nullable: false})
 	GPSWest: string;
 
-	@OneToMany(() => Calls, (Calls) => Calls.location)
-	calls: Calls[];
+	@OneToMany(() => CallData, (CallData) => CallData.location)
+	callData: CallData[];
 }
