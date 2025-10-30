@@ -1,21 +1,29 @@
 import csv
 from pathlib import Path
-# import sqlite3
+import sqlite3
 
-# connection = sqlite3.connect('../../animal.sql')
 
-# cursor = connection.cursor()
+db = Path(__file__).parents[2] / "animal.sql"
 
+connection = sqlite3.connect(db)
+
+cursor = connection.cursor()
+
+# needed to get the file path so we could open the file
 file = Path(__file__).parent / "animal.csv"
+
+insert_record = "INSERT INTO Animals (species, subspecies, binomial) VALUES ('Bats', ?, ?);"
 
 with file.open("r") as file:
   csvFile = csv.reader(file)
-  for lines in csvFile:
-    print(lines)
+  cursor.executemany(insert_record, csvFile),
 
-# contents = csv.reader(file)
+select_all = "SELECT * FROM Animals;"
+rows = cursor.execute(select_all).fetchall()
 
-# print(contents)
+for r in rows:
+  print(r)
 
+connection.commit()
 
-# insert_record = "INSERT INTO Animals (species, subspecies, binomial) VALUES (?, ?, ?);"
+connection.close()
