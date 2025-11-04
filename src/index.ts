@@ -117,9 +117,41 @@ const createWindow = async () => {
                   strftime('%Y', date) AS date, SUM(Calls.callCount) AS callCount
                 FROM
 	                callData
-	                LEFT JOIN Calls ON CallData.id=Calls.callData
+	                JOIN Calls ON CallData.id=Calls.callData
                 GROUP BY 
 	                strftime('%Y', date);`
+      event.returnValue = await  dataSource.query(sql);
+    } catch (err) {
+      throw err;
+    }
+  });
+
+  ipcMain.on('get-callYearDemographics', async (event: any) => {
+    try {
+      let sql = `SELECT 
+                  strftime('%Y', date) AS date, Animals.subspecies AS animalName, SUM(callCount) AS callCount
+                FROM
+	                CallData
+	                JOIN Calls ON Calls.callData = CallData.id
+	                JOIN Animals ON Animals.id = Calls.animal
+                GROUP BY
+	                strftime('%Y', date), Animals.subspecies;`
+      event.returnValue = await  dataSource.query(sql);
+    } catch (err) {
+      throw err;
+    }
+  });
+
+  ipcMain.on('get-callDemographics', async (event: any) => {
+    try {
+      let sql = `SELECT 
+                  Animals.subspecies AS name, SUM(callCount) AS callCount
+                FROM
+	                CallData
+	                JOIN Calls ON Calls.callData = CallData.id
+	                JOIN Animals ON Animals.id = Calls.animal
+                GROUP BY
+	                Animals.subspecies;`
       event.returnValue = await  dataSource.query(sql);
     } catch (err) {
       throw err;
