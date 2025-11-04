@@ -114,7 +114,7 @@ const createWindow = async () => {
   ipcMain.on('get-callCounts', async (event: any) => {
     try {
       let sql = `SELECT  
-                  strftime('%Y', date) AS year, SUM(Calls.callCount) AS callCount
+                  strftime('%Y', date) AS date, SUM(Calls.callCount) AS callCount
                 FROM
 	                callData
 	                LEFT JOIN Calls ON CallData.id=Calls.callData

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
+import { LineGraph } from '../graph/lineGraph/lineGraph';
 
 const CallPage
  = () => {
-  const [callData, setCallData] = useState();
+  const [callData, setCallData] = useState([]);
 
   const fetchCallData = (): void => {
     const callDataList = window?.electron?.sendSync('get-callCounts');
-    console.log("CALL DATA", callDataList);
     setCallData(callDataList);
   }
 
@@ -17,13 +17,7 @@ const CallPage
 
   return <>
     <h1> CALLS PAGE</h1>
-    <ul >
-      {
-        callData ? callData.map((calls)=> <li key={"item_"+ calls.year}>{calls.year + " | " + calls.callCount}</li>) : "No callData"
-      }
-
-
-    </ul>
+    { callData ? <LineGraph data={callData}/> : <div> There is currently no call data found</div>}
     </>;
 }
 
