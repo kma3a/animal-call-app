@@ -1,6 +1,7 @@
 import csv
 from pathlib import Path
 import sqlite3
+import re
 
 
 db = Path(__file__).parents[2] / "animal.sql"
@@ -58,13 +59,13 @@ def get_callData():
   with file.open("r") as file:
     csvFile = csv.DictReader(file)
     for data in csvFile:
-      cursor.execute(insert_callData,
-        [data["Date"], location_dictionary[data["Location"]], data["Begin Time"], data["End Time"], data["Sunset Time"], 
+      date_new = re.sub(r"(\d+)/(\d+)/(\d+)", r"20\3-\1-\2", data["Date"])
+      cursor.execute(insert_callData, [date_new, location_dictionary[data["Location"]], data["Begin Time"], data["End Time"], data["Sunset Time"], 
         data["Is Moon Visible"] == "Y", data["Moon Phase"], data["Percent Illuminated"], data["Wind Code Start"],
         data["Wind Code End"], data["Sky Code Start"], data["Sky Code End"], data["Start Temp F"], data["End Temp F"],
         data["RH Start"], data["RH End"], data["Mic"]]
       )
-      id = cursor.execute(select_callData, [data["Date"], data["Begin Time"], location_dictionary[data["Location"]]]).fetchall()[0][0]
+      id = cursor.execute(select_callData, [date_new, data["Begin Time"], location_dictionary[data["Location"]]]).fetchall()[0][0]
       for animal in animal_dictionary.keys():
         if data[animal] != "":
           insert_calls(id, animal_dictionary[animal], data[animal]) 
