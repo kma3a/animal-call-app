@@ -1,7 +1,7 @@
 {
   "name": "animal-call-app",
   "version": "1.0.0",
-  "description": "an app to play with data on animal noices",
+  "description": "an app to play with data on animal noises",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -17,6 +17,7 @@
     "electron-squirrel-startup": "^1.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "recharts": "^3.3.0",
     "sqlite3": "^5.1.7",
     "typeorm": "^0.3.20"
   },

@@ -109,6 +109,23 @@ const createWindow = async () => {
     }
   });
 
+
+  // // Call queries
+  ipcMain.on('get-callCounts', async (event: any, args: {id: number, param: object}) => {
+    try {
+      let sql = `SELECT  
+                  strftime('%Y', date) AS year, SUM(Calls.callCount) AS callCount
+                FROM
+	                callData
+	                LEFT JOIN Calls ON CallData.id=Calls.callData
+                GROUP BY 
+	                strftime('%Y', date);`
+      event.returnValue = await  dataSource.query(sql);
+    } catch (err) {
+      throw err;
+    }
+  });
+
   
   // mainWindow.loadFile(path.join(__dirname, '../renderer/main_window/index.html'));
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);

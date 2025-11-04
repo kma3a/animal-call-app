@@ -4,7 +4,7 @@ import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
 import { AnimalsPage } from "./animalList/AnimalsPage";
 import { LocationPage } from './location/locationPage';
-import { Home } from './home/Home';
+import { CallPage } from './call/callPage';
 import Layout from './layout/layout';
 
 
@@ -18,7 +18,7 @@ const App = () => {
       children: [
         {
           path: "",
-          element: <Home />,
+          element: <CallPage />,
         },
         {
           path: "animals",
