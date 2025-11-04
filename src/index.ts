@@ -111,7 +111,7 @@ const createWindow = async () => {
 
 
   // // Call queries
-  ipcMain.on('get-callCounts', async (event: any, args: {id: number, param: object}) => {
+  ipcMain.on('get-callCounts', async (event: any) => {
     try {
       let sql = `SELECT  
                   strftime('%Y', date) AS year, SUM(Calls.callCount) AS callCount
