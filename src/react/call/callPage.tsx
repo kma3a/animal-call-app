@@ -5,7 +5,7 @@ import { PieGraph } from '../graph/pieGraph/pieGraph';
 const CallPage
  = () => {
   const [callData, setCallData] = useState([]);
-  const [callDemographics, setCallDemographics] = useState([]);
+  const [callTopDemographics, setCallTopDemographics] = useState([]);
   const [callYearDemographics, setCallYearDemographics] = useState([]);
 
   const fetchCallData = (): void => {
@@ -23,22 +23,25 @@ const CallPage
   //   adjustYearDemoList(callDemoList)
   // }
 
-  const fetchCallDemographics = (): void => {
-    const callDemoList = window?.electron?.sendSync('get-callDemographics');
-    setCallDemographics(callDemoList)
+  const fetchCallTopDemographics = (): void => {
+    const callDemoList = window?.electron?.sendSync('get-callTopDemographics');
+    setCallTopDemographics(callDemoList)
   }
 
 
   useEffect(() => {
     fetchCallData(); 
     // fetchYearCallDemographics();
-    fetchCallDemographics();
+    fetchCallTopDemographics();
   }, []);
 
   return <>
     <h1> CALLS PAGE</h1>
     { callData ? <LineGraph data={callData}/> : <div> There are currently no call data found</div>}
-    { callDemographics ? <PieGraph GraphData={callDemographics} /> : <div> There are currently no demographic data found</div>}
+    <div>
+      <h2>Top {callTopDemographics.length} Animals Heard</h2>
+      { callTopDemographics ? <PieGraph GraphData={callTopDemographics} /> : <div> There are currently no demographic data found</div>}
+    </div>
     {/* <ul>
       {callDemographics.map((animal) => <li key={animal.name}>{animal.name + "|" + animal.calls}</li>)}
     </ul> */}

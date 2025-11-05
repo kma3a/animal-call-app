@@ -142,7 +142,7 @@ const createWindow = async () => {
     }
   });
 
-  ipcMain.on('get-callDemographics', async (event: any) => {
+  ipcMain.on('get-callTopDemographics', async (event: any) => {
     try {
       let sql = `SELECT 
                   Animals.subspecies AS name, SUM(callCount) AS callCount
@@ -151,7 +151,8 @@ const createWindow = async () => {
 	                JOIN Calls ON Calls.callData = CallData.id
 	                JOIN Animals ON Animals.id = Calls.animal
                 GROUP BY
-	                Animals.subspecies;`
+	                Animals.subspecies
+                LIMIT 5;`
       event.returnValue = await  dataSource.query(sql);
     } catch (err) {
       throw err;
