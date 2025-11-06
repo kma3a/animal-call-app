@@ -1,17 +1,27 @@
 import { useEffect, useState } from 'react';
 import { LineGraph } from '../graph/lineGraph/lineGraph';
 import { PieGraph } from '../graph/pieGraph/pieGraph';
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+
+interface BodyRowsProps {
+  data: {date: string},
+  animalList: {name: string}[],
+}
+
+const BodyRows = ({data, animalList}: BodyRowsProps) => {
+  return <TableRow>
+    <TableCell>{data.date}</TableCell>
+    {animalList.map((animal) => <TableCell align="right">{data[animal.name.replaceAll(" ", "")] | 0}</TableCell>)}
+
+  </TableRow>;
+}
 
 const CallPage
  = () => {
   const [callData, setCallData] = useState([]);
   const [callTopDemographics, setCallTopDemographics] = useState([]);
   const [callYearDemographics, setCallYearDemographics] = useState([]);
-
-  const fetchCallData = (): void => {
-    const callDataList = window?.electron?.sendSync('get-callCounts');
-    setCallData(callDataList);
-  }
+  const [animalList, setAnimalList] = useState([]);
 
   const adjustYearDemoList = (callDemo: {date: Date, animalName: string, callCount: number}[]):void => {
     const newDemoList = [];
@@ -29,21 +39,32 @@ const CallPage
     setCallYearDemographics(newDemoList)
   }
 
-  const fetchYearCallDemographics = (): void => {
-    const callDemoList = window?.electron?.sendSync('get-callYearDemographics');
-    adjustYearDemoList(callDemoList)
+  const fetchAnimalSpecies = ():void => {
+    const animalList =  window?.electron?.sendSync('get-animalSpecies');
+    setAnimalList(animalList);
   }
 
-  const fetchCallTopDemographics = (): void => {
-    const callDemoList = window?.electron?.sendSync('get-callTopDemographics');
-    setCallTopDemographics(callDemoList)
+  const fetchCallData = (): void => {
+    const callDataList = window?.electron?.sendSync('get-callCounts');
+    setCallData(callDataList);
   }
+  const fetchCallTopDemographics = (): void => {
+    const callTopDemographics = window?.electron?.sendSync('get-callTopDemographics');
+    setCallTopDemographics(callTopDemographics);
+  }
+
+  const fetchYearCallDemographics = (): void => {
+    const yearCallDemoList = window?.electron?.sendSync('get-callYearDemographics');
+    adjustYearDemoList(yearCallDemoList);
+  }
+
 
 
   useEffect(() => {
     fetchCallData(); 
     fetchYearCallDemographics();
     fetchCallTopDemographics();
+    fetchAnimalSpecies();
   }, []);
 
   return <>
@@ -53,8 +74,23 @@ const CallPage
       <h2>Top {callTopDemographics.length} Animals Heard</h2>
       { callTopDemographics ? <PieGraph GraphData={callTopDemographics} /> : <div> There are currently no demographic data found</div>}
     </div>
+    <div>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              Date
+            </TableCell>
+            { animalList.map((animal) => <TableCell align="right">{animal.name}</TableCell>)}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          { callYearDemographics.map((year) => <BodyRows data={year} animalList={animalList}/>) }
+        </TableBody>
+      </Table>
+    </div>
    
-    </>;
+  </>;
 }
 
 export {

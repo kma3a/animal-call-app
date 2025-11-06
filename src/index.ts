@@ -160,6 +160,18 @@ const createWindow = async () => {
     }
   });
 
+  ipcMain.on('get-animalSpecies', async (event: any) => {
+    try {
+      let sql = `SELECT 
+                  Animals.subspecies AS name
+                FROM
+	                Animals;`
+      event.returnValue = await  dataSource.query(sql);
+    } catch (err) {
+      throw err;
+    }
+  });
+
   
   // mainWindow.loadFile(path.join(__dirname, '../renderer/main_window/index.html'));
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
