@@ -1,20 +1,7 @@
 import { useEffect, useState } from 'react';
 import { LineGraph } from '../graph/lineGraph/lineGraph';
 import { PieGraph } from '../graph/pieGraph/pieGraph';
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
-
-interface BodyRowsProps {
-  data: {date: string},
-  animalList: {name: string}[],
-}
-
-const BodyRows = ({data, animalList}: BodyRowsProps) => {
-  return <TableRow>
-    <TableCell>{data.date}</TableCell>
-    {animalList.map((animal) => <TableCell align="right">{data[animal.name.replaceAll(" ", "")] | 0}</TableCell>)}
-
-  </TableRow>;
-}
+import { TableDisplay } from '../table/tableDisplay';
 
 const CallPage
  = () => {
@@ -75,19 +62,7 @@ const CallPage
       { callTopDemographics ? <PieGraph GraphData={callTopDemographics} /> : <div> There are currently no demographic data found</div>}
     </div>
     <div>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              Date
-            </TableCell>
-            { animalList.map((animal) => <TableCell align="right">{animal.name}</TableCell>)}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          { callYearDemographics.map((year) => <BodyRows data={year} animalList={animalList}/>) }
-        </TableBody>
-      </Table>
+      <TableDisplay data={callYearDemographics} animalList={animalList}/> 
     </div>
    
   </>;
@@ -95,5 +70,4 @@ const CallPage
 
 export {
   CallPage
-  ,
 }
