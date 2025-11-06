@@ -135,7 +135,8 @@ const createWindow = async () => {
 	                JOIN Calls ON Calls.callData = CallData.id
 	                JOIN Animals ON Animals.id = Calls.animal
                 GROUP BY
-	                strftime('%Y', date), Animals.subspecies;`
+	                strftime('%Y', date), Animals.subspecies
+                ORDER BY strftime('%Y', date) DESC`
       event.returnValue = await  dataSource.query(sql);
     } catch (err) {
       throw err;

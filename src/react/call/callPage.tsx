@@ -13,15 +13,26 @@ const CallPage
     setCallData(callDataList);
   }
 
-  // const adjustYearDemoList = (callDemo):void => {
-  //   const newDemoList = [];
-  //   callDemo.forEach()
-  // }
+  const adjustYearDemoList = (callDemo: {date: Date, animalName: string, callCount: number}[]):void => {
+    const newDemoList = [];
+    var currentYearObj = {};
+    callDemo.forEach((animalCall: {date: Date, animalName: string, callCount: number}) => {
+      if (animalCall.date !== currentYearObj?.date) {
+        if(Object.keys(currentYearObj).length > 0) {newDemoList.push(currentYearObj)}
+        currentYearObj = { date: animalCall.date};
+      }
+      const name = animalCall.animalName.replaceAll(" ", "");
+      currentYearObj[name] = animalCall.callCount;
+      
+    });
+    newDemoList.push(currentYearObj);
+    setCallYearDemographics(newDemoList)
+  }
 
-  // const fetchYearCallDemographics = (): void => {
-  //   const callDemoList = window?.electron?.sendSync('get-callYearDemographics');
-  //   adjustYearDemoList(callDemoList)
-  // }
+  const fetchYearCallDemographics = (): void => {
+    const callDemoList = window?.electron?.sendSync('get-callYearDemographics');
+    adjustYearDemoList(callDemoList)
+  }
 
   const fetchCallTopDemographics = (): void => {
     const callDemoList = window?.electron?.sendSync('get-callTopDemographics');
@@ -31,7 +42,7 @@ const CallPage
 
   useEffect(() => {
     fetchCallData(); 
-    // fetchYearCallDemographics();
+    fetchYearCallDemographics();
     fetchCallTopDemographics();
   }, []);
 
@@ -42,9 +53,7 @@ const CallPage
       <h2>Top {callTopDemographics.length} Animals Heard</h2>
       { callTopDemographics ? <PieGraph GraphData={callTopDemographics} /> : <div> There are currently no demographic data found</div>}
     </div>
-    {/* <ul>
-      {callDemographics.map((animal) => <li key={animal.name}>{animal.name + "|" + animal.calls}</li>)}
-    </ul> */}
+   
     </>;
 }
 

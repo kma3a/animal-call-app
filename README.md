@@ -14,6 +14,8 @@ The purpose of this application is to be able to visualize the data gathered for
 
 Electron, Electron-forge, React, TypeScript, and Webpack.
 
+For the graphs I used Recharts and the tables MUI because I'll be using it later to make the app pretty
+
 ## Setup Notes
 
 I tried to use [this old tutorial](https://medium.com/free-code-camp/creating-an-electron-app-using-angular-and-sqlite3-24ca7d892810) to set up the application with sqlite3. I had to reset up the application because `electron-forge init electron-angular-sqlite3 --template=angular2` was too old by about 7 years. I used the electron portion of the application right now with some updates. For example, I used getDataSource instead of createConnection because it is deprecated.
