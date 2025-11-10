@@ -172,6 +172,27 @@ const createWindow = async () => {
     }
   });
 
+  //END call Queries
+
+  // Start Lunar Queries
+
+  ipcMain.on('get-lunarPhaseCount', async (event: any) => {
+    try {
+      let sql = `SELECT moonPhase, Animals.subspecies AS animalName, SUM(callCount) AS callCount
+                FROM
+	                CallData
+	                JOIN Calls ON Calls.callData = CallData.id
+	                JOIN Animals ON Animals.id = Calls.animal
+                GROUP BY
+	                moonPhase, Animals.subspecies;`
+      event.returnValue = await  dataSource.query(sql);
+    } catch (err) {
+      throw err;
+    }
+  });
+
+  // END Lunar Queries
+
   
   // mainWindow.loadFile(path.join(__dirname, '../renderer/main_window/index.html'));
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);

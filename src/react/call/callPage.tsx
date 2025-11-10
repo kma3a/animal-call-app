@@ -16,10 +16,11 @@ const CallPage
     callDemo.forEach((animalCall: {date: Date, animalName: string, callCount: number}) => {
       if (animalCall.date !== currentYearObj?.date) {
         if(Object.keys(currentYearObj).length > 0) {newDemoList.push(currentYearObj)}
-        currentYearObj = { date: animalCall.date};
+        currentYearObj = { date: animalCall.date, total: 0};
       }
       const name = animalCall.animalName.replaceAll(" ", "");
       currentYearObj[name] = animalCall.callCount;
+      currentYearObj.total += animalCall.callCount; 
       
     });
     newDemoList.push(currentYearObj);
@@ -62,7 +63,7 @@ const CallPage
       { callTopDemographics ? <PieGraph GraphData={callTopDemographics} /> : <div> There are currently no demographic data found</div>}
     </div>
     <div>
-      <TableDisplay data={callYearDemographics} animalList={animalList}/> 
+      <TableDisplay data={callYearDemographics} animalList={animalList} firstCell={{title: "Date", key: "date"}}/> 
     </div>
    
   </>;
