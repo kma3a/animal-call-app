@@ -8,6 +8,10 @@ const Layout = () => {
           <li>
             <Link to="/main_window">Home</Link>
           </li>
+
+          <li>
+            <Link to="lunar_phase">Lunar Phase</Link>
+          </li>
         </ul>
       </nav>
 

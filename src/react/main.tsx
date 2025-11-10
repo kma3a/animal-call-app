@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider} from "react-router-dom";
 import { AnimalsPage } from "./animalList/AnimalsPage";
 import { LocationPage } from './location/locationPage';
 import { CallPage } from './call/callPage';
+import { LunarPhasePage } from './lunarPhasePage/lunarPhasePage';
 import Layout from './layout/layout';
 
 
@@ -19,6 +20,10 @@ const App = () => {
         {
           path: "",
           element: <CallPage />,
+        },
+        {
+          path: "lunar_phase",
+          element: <LunarPhasePage />,
         },
         {
           path: "animals",
