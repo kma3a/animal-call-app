@@ -33,7 +33,7 @@ export const useCallPageViewModel = () => {
   }
 
   const fetchCallDemographics = (): void => {
-    const callDemoList = window?.electron?.sendSync('get-callYearDemographics');
+    const callDemoList = window?.electron?.sendSync('get-callDemographics');
     adjustDemoList(callDemoList);
   }
 
@@ -48,6 +48,7 @@ export const useCallPageViewModel = () => {
   return {
     animalList,
     callDemographics,
-    callTopDemographics
+    callTopDemographics,
+    reverseCallDemographics: callDemographics.sort((a,b) => a.date - b.date)
   };
 };

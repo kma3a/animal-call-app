@@ -6,12 +6,12 @@ import { useCallPageViewModel } from './callPageViewMode';
 const CallPage
  = () => {
 
-  const {animalList, callDemographics, callTopDemographics} = useCallPageViewModel();
+  const {animalList, callDemographics, callTopDemographics, reverseCallDemographics} = useCallPageViewModel();
   
 
   return <>
     <h1> CALLS PAGE</h1>
-    { callDemographics ? <LineGraph data={callDemographics.sort((a,b) => a.date - b.date)}/> : <div> There are currently no call data found</div>}
+    { callDemographics ? <LineGraph data={reverseCallDemographics}/> : <div> There are currently no call data found</div>}
     <div>
       <h2>Top {callTopDemographics.length} Animals Heard</h2>
       { callTopDemographics ? <PieGraph GraphData={callTopDemographics} /> : <div> There are currently no demographic data found</div>}
