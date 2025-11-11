@@ -1,7 +1,7 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 interface LineGraphData {
   date: string,
-  callCount: number,
+  total: number,
 }
 interface LineGraphProps {
   data: LineGraphData[]
@@ -25,7 +25,7 @@ const LineGraph = ({data}: LineGraphProps) => {
       <YAxis width="auto" />
       <Tooltip />
       <Legend />
-      <Line type="monotone" dataKey="callCount" stroke="#8884d8" activeDot={{ r: 8 }} />
+      <Line type="monotone" dataKey="total" stroke="#8884d8" activeDot={{ r: 8 }} />
     </LineChart>
   );
 }
