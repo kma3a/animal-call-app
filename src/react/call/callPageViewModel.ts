@@ -49,6 +49,6 @@ export const useCallPageViewModel = () => {
     animalList,
     callDemographics,
     callTopDemographics,
-    reverseCallDemographics: callDemographics.sort((a,b) => a.date - b.date)
+    reverseCallDemographics: callDemographics.toReversed()
   };
 };
