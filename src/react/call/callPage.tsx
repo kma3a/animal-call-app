@@ -1,7 +1,7 @@
 import { LineGraph } from '../graph/lineGraph/lineGraph';
 import { PieGraph } from '../graph/pieGraph/pieGraph';
 import { TableDisplay } from '../table/tableDisplay';
-import { useCallPageViewModel } from './callPageViewMode';
+import { useCallPageViewModel } from './callPageViewModel';
 
 const CallPage
  = () => {
