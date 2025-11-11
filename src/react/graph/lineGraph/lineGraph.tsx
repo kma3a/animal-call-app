@@ -4,10 +4,12 @@ interface LineGraphData {
   total: number,
 }
 interface LineGraphProps {
-  data: LineGraphData[]
+  data: LineGraphData[],
+  display: {xAxis: string, yAxis: string}
 }
 
-const LineGraph = ({data}: LineGraphProps) => {
+const LineGraph = ({data, display}: LineGraphProps) => {
+  const {xAxis, yAxis} = display;
   return (
     <LineChart
       style={{ width: '100%', maxWidth: '700px', height: '100%', maxHeight: '70vh', aspectRatio: 1.618 }}
@@ -21,11 +23,11 @@ const LineGraph = ({data}: LineGraphProps) => {
       }}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="date" padding={{ left: 30, right: 30 }} />
+      <XAxis dataKey={xAxis} padding={{ left: 30, right: 30 }} />
       <YAxis width="auto" />
       <Tooltip />
       <Legend />
-      <Line type="monotone" dataKey="total" stroke="#8884d8" activeDot={{ r: 8 }} />
+      <Line type="monotone" dataKey={yAxis} stroke="#8884d8" activeDot={{ r: 8 }} />
     </LineChart>
   );
 }

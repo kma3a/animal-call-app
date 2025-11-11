@@ -11,7 +11,7 @@ const CallPage
 
   return <>
     <h1> CALLS PAGE</h1>
-    { callDemographics ? <LineGraph data={reverseCallDemographics}/> : <div> There are currently no call data found</div>}
+    { callDemographics ? <LineGraph data={reverseCallDemographics} display={{xAxis: "date", yAxis: "total"}}/> : <div> There are currently no call data found</div>}
     <div>
       <h2>Top {callTopDemographics.length} Animals Heard</h2>
       { callTopDemographics ? <PieGraph GraphData={callTopDemographics} /> : <div> There are currently no demographic data found</div>}
