@@ -5,9 +5,9 @@ import { createBrowserRouter, RouterProvider} from "react-router-dom";
 import { AnimalsPage } from "./ui/animalList/AnimalsPage";
 import { LocationPage } from './ui/location/locationPage';
 import { CallPage } from './ui/call/callPage';
-import { LunarPhasePage } from './ui/lunar/lunarPhasePage/lunarPhasePage';
+import { LunarPhasePage } from './ui/pages/lunar/lunarPhasePage/lunarPhasePage';
 import Layout from './layout/layout';
-import { LunarVisibilityPage } from './ui/lunar/lunarVisibilityPage/lunarVisibilityPage';
+import { LunarVisibilityPage } from './ui/pages/lunar/lunarVisibilityPage/lunarVisibilityPage';
 
 
 

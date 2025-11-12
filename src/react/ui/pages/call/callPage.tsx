@@ -1,6 +1,6 @@
-import { LineGraph } from '../../components/graph/lineGraph/lineGraph';
-import { PieGraph } from '../../components/graph/pieGraph/pieGraph';
-import { TableDisplay } from '../../components/table/tableDisplay';
+import { LineGraph } from '../components/graph/lineGraph/lineGraph';
+import { PieGraph } from '../components/graph/pieGraph/pieGraph';
+import { TableDisplay } from '../components/table/tableDisplay';
 import { useCallPageViewModel } from './callPageViewModel';
 
 const CallPage
