@@ -12,6 +12,9 @@ const Layout = () => {
           <li>
             <Link to="lunar_phase">Lunar Phase</Link>
           </li>
+          <li>
+            <Link to="lunar_visibility">Lunar Visibility</Link>
+          </li>
         </ul>
       </nav>
 

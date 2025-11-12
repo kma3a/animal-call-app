@@ -2,11 +2,12 @@ import { createRoot } from 'react-dom/client';
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
-import { AnimalsPage } from "./animalList/AnimalsPage";
-import { LocationPage } from './location/locationPage';
-import { CallPage } from './call/callPage';
-import { LunarPhasePage } from './lunarPhasePage/lunarPhasePage';
+import { AnimalsPage } from "./ui/animalList/AnimalsPage";
+import { LocationPage } from './ui/location/locationPage';
+import { CallPage } from './ui/call/callPage';
+import { LunarPhasePage } from './ui/lunar/lunarPhasePage/lunarPhasePage';
 import Layout from './layout/layout';
+import { LunarVisibilityPage } from './ui/lunar/lunarVisibilityPage/lunarVisibilityPage';
 
 
 
@@ -22,16 +23,20 @@ const App = () => {
           element: <CallPage />,
         },
         {
-          path: "lunar_phase",
-          element: <LunarPhasePage />,
-        },
-        {
           path: "animals",
           element: <AnimalsPage />,
         },
         {
           path: "locations",
           element: <LocationPage />,
+        },
+        {
+          path: "lunar_phase",
+          element: <LunarPhasePage />,
+        },
+        {
+          path: "lunar_visibility",
+          element: <LunarVisibilityPage />,
         },
       ]
     },

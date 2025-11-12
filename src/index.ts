@@ -177,6 +177,21 @@ const createWindow = async () => {
     }
   });
 
+  ipcMain.on('get-lunarVisibilityCount', async (event: any) => {
+    try {
+      let sql = `SELECT isMoonVisible, Animals.subspecies AS animalName, SUM(callCount) AS callCount
+                FROM
+	                CallData
+	                JOIN Calls ON Calls.callData = CallData.id
+	                JOIN Animals ON Animals.id = Calls.animal
+                GROUP BY
+	                isMoonVisible, Animals.subspecies;`
+      event.returnValue = await  dataSource.query(sql);
+    } catch (err) {
+      throw err;
+    }
+  });
+
   // END Lunar Queries
 
   

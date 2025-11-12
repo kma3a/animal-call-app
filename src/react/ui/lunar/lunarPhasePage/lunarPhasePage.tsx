@@ -1,5 +1,5 @@
-import { BarGraph } from "../graph/barGraph/barGraph";
-import { TableDisplay } from "../table/tableDisplay";
+import { BarGraph } from "../../../components/graph/barGraph/barGraph";
+import { TableDisplay } from "../../../components/table/tableDisplay";
 import { useLunarPhasePageViewModel } from "./lunarPhasePageViewModel";
 
 const LunarPhasePage = () => {
