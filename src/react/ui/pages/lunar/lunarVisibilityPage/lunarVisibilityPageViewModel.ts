@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { CountPage } from "../../../../types";
 
 export const useLunarVisibilityPageViewModel = () => {
   const [lunarCount, setLunarCount] = useState([]);
@@ -23,7 +24,7 @@ export const useLunarVisibilityPageViewModel = () => {
   }
 
   const fetchLunarVisibilityCount = (): void => {
-    const lunarList = window?.electron?.sendSync('get-lunarVisibilityCount');
+    const lunarList = window?.electron?.sendSync('get-callCount', {page: CountPage.LunarVis});
     adjustLunarVisibilityCount(lunarList);
   }
 

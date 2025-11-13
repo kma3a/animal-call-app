@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { DateDisplay, CountPage } from "../../../types";
 
 export const useCallPageViewModel = () => {
   const [callTopDemographics, setCallTopDemographics] = useState([]);
@@ -33,7 +34,7 @@ export const useCallPageViewModel = () => {
   }
 
   const fetchCallDemographics = (): void => {
-    const callDemoList = window?.electron?.sendSync('get-callDemographics');
+    const callDemoList = window?.electron?.sendSync('get-callCount', {page: CountPage.Call, dateDisplay: DateDisplay.Year});
     adjustDemoList(callDemoList);
   }
 

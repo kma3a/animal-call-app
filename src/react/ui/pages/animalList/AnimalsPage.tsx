@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { AddItems } from '../components/addItem/addItems';
-import { Animals } from '../../../data/animal.schema';
-import { List } from '../components/list/list';
+import { AddItems } from '../../components/addItem/addItems';
+import { Animals } from '../../../../data/animal.schema';
+import { List } from '../../components/list/list';
 
 const animalColumns = ["species", "subspecies", "binomial"];
 

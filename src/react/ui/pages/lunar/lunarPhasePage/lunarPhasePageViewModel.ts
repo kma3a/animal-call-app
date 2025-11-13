@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { CountPage } from "../../../../types";
 
 export const useLunarPhasePageViewModel = () => {
   const [lunarCount, setLunarCount] = useState([]);
@@ -22,7 +23,7 @@ export const useLunarPhasePageViewModel = () => {
   }
 
   const fetchLunarPhaseCount = (): void => {
-    const lunarList = window?.electron?.sendSync('get-lunarPhaseCount');
+    const lunarList = window?.electron?.sendSync('get-callCount', {page: CountPage.LunarPhase});
     adjustLunarPhaseCount(lunarList);
   }
 

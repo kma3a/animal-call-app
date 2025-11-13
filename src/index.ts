@@ -3,9 +3,12 @@ import { app, BrowserWindow, ipcMain } from "electron";
 import { getDataSource } from "./data/dbConnect";
 import { Animals } from "./data/animal.schema";
 import { Locations } from "./data/location.schema";
+import { CountPage, DateDisplay } from "./react/types";
+
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+
 
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -112,17 +115,49 @@ const createWindow = async () => {
 
   // // Call queries
 
-  ipcMain.on('get-callDemographics', async (event: any) => {
+  ipcMain.on('get-callCount', async (event: any, args: {page: CountPage, dateDisplay?: DateDisplay, param?: object}) => {
+    const {page, dateDisplay, param} = args;
+    const dateData = {
+      [DateDisplay.Year]: ["strftime('%Y', date)"],
+      [DateDisplay.Month]: [""],
+      [DateDisplay.Week]: [""],
+      [DateDisplay.Day]: [""],
+    };
+
+    const countParamList = {
+      [CountPage.Call]: [dateData[dateDisplay]],
+      [CountPage.LunarPhase]: ["moonPhase"],
+      [CountPage.LunarVis]: ["isMoonVisible"],
+    };
     try {
-      let sql = `SELECT 
-                  strftime('%Y', date) AS date, Animals.subspecies AS animalName, SUM(callCount) AS callCount
+      let sql = `SELECT ${page === CountPage.Call ? dateData[dateDisplay] + " AS date" : countParamList[page]}, Animals.subspecies AS animalName, SUM(callCount) AS callCount
                 FROM
 	                CallData
 	                JOIN Calls ON Calls.callData = CallData.id
 	                JOIN Animals ON Animals.id = Calls.animal
                 GROUP BY
-	                strftime('%Y', date), Animals.subspecies
-                ORDER BY strftime('%Y', date) DESC`
+	                ${countParamList[page]}, Animals.subspecies
+                ORDER BY ${countParamList[page]} DESC;`
+      event.returnValue = await  dataSource.query(sql);
+    } catch (err) {
+      throw err;
+    }
+  });
+
+  ipcMain.on('get-dateDemographics', async (event: any, args: {dateDisplay: DateDisplay, param?: object}) => {
+    const {dateDisplay, param} = args;
+    
+
+    try {
+      let sql = `SELECT 
+                  ${dateData[dateDisplay]} AS date, Animals.subspecies AS animalName, SUM(callCount) AS callCount
+                FROM
+	                CallData
+	                JOIN Calls ON Calls.callData = CallData.id
+	                JOIN Animals ON Animals.id = Calls.animal
+                GROUP BY
+	                ${dateData[dateDisplay]}, Animals.subspecies
+                ORDER BY ${dateData[dateDisplay]} DESC`
       event.returnValue = await  dataSource.query(sql);
     } catch (err) {
       throw err;
@@ -158,39 +193,7 @@ const createWindow = async () => {
     }
   });
 
-  //END call Queries
-
-  // Start Lunar Queries
-
-  ipcMain.on('get-lunarPhaseCount', async (event: any) => {
-    try {
-      let sql = `SELECT moonPhase, Animals.subspecies AS animalName, SUM(callCount) AS callCount
-                FROM
-	                CallData
-	                JOIN Calls ON Calls.callData = CallData.id
-	                JOIN Animals ON Animals.id = Calls.animal
-                GROUP BY
-	                moonPhase, Animals.subspecies;`
-      event.returnValue = await  dataSource.query(sql);
-    } catch (err) {
-      throw err;
-    }
-  });
-
-  ipcMain.on('get-lunarVisibilityCount', async (event: any) => {
-    try {
-      let sql = `SELECT isMoonVisible, Animals.subspecies AS animalName, SUM(callCount) AS callCount
-                FROM
-	                CallData
-	                JOIN Calls ON Calls.callData = CallData.id
-	                JOIN Animals ON Animals.id = Calls.animal
-                GROUP BY
-	                isMoonVisible, Animals.subspecies;`
-      event.returnValue = await  dataSource.query(sql);
-    } catch (err) {
-      throw err;
-    }
-  });
+  
 
   // END Lunar Queries
 
