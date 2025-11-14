@@ -4,6 +4,7 @@ import { getDataSource } from "./data/dbConnect";
 import { Animals } from "./data/animal.schema";
 import { Locations } from "./data/location.schema";
 import { CountPage, DateDisplay } from "./react/types";
+import { SimpleConsoleLogger } from "typeorm";
 
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
@@ -115,6 +116,26 @@ const createWindow = async () => {
 
   // // Call queries
 
+
+
+  const adjustAnimalCallData = (data: [], headData: string) => {
+     const newList = [];
+    var currentObj = {};
+    data.forEach((animalCall: {[headData]: boolean|string, animalName: string, callCount: number}) => {
+      if (currentObj?.[headData] !==  animalCall[headData]) {
+        if(Object.keys(currentObj).length > 0) {newList.push(currentObj)}
+        currentObj = { [headData]: animalCall[headData], total: 0};
+      }
+      const name = animalCall.animalName.replaceAll(" ", "");
+      currentObj[name] = animalCall.callCount;
+      currentObj.total += animalCall.callCount;
+      
+    });
+    newList.push(currentObj);
+    return newList;
+
+  }
+
   ipcMain.on('get-callCount', async (event: any, args: {page: CountPage, dateDisplay?: DateDisplay, param?: object}) => {
     const {page, dateDisplay, param} = args;
     const dateData = {
@@ -141,7 +162,9 @@ const createWindow = async () => {
                 GROUP BY
 	                ${countParamList[page]}, Animals.subspecies
                 ORDER BY ${countParamList[page]} DESC;`
-      event.returnValue = await  dataSource.query(sql);
+      const data = await  dataSource.query(sql);
+      const adjustedData = adjustAnimalCallData(data, page === CountPage.Call ? "date" : countParamList[page][0])
+      event.returnValue = adjustedData; 
     } catch (err) {
       throw err;
     }

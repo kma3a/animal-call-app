@@ -6,23 +6,6 @@ export const useCallPageViewModel = () => {
   const [callDemographics, setCallDemographics] = useState([]);
   const [animalList, setAnimalList] = useState([]);
 
-  const adjustDemoList = (callDemo: {date: Date, animalName: string, callCount: number}[]):void => {
-    const newDemoList = [];
-    var currentYearObj = {};
-    callDemo.forEach((animalCall: {date: Date, animalName: string, callCount: number}) => {
-      if (animalCall.date !== currentYearObj?.date) {
-        if(Object.keys(currentYearObj).length > 0) {newDemoList.push(currentYearObj)}
-        currentYearObj = { date: animalCall.date, total: 0};
-      }
-      const name = animalCall.animalName.replaceAll(" ", "");
-      currentYearObj[name] = animalCall.callCount;
-      currentYearObj.total += animalCall.callCount; 
-      
-    });
-    newDemoList.push(currentYearObj);
-    setCallDemographics(newDemoList)
-  }
-
   const fetchAnimalSpecies = ():void => {
     const animalList =  window?.electron?.sendSync('get-animalSpecies');
     setAnimalList(animalList);
@@ -35,7 +18,7 @@ export const useCallPageViewModel = () => {
 
   const fetchCallDemographics = (): void => {
     const callDemoList = window?.electron?.sendSync('get-callCount', {page: CountPage.Call, dateDisplay: DateDisplay.Year});
-    adjustDemoList(callDemoList);
+    setCallDemographics(callDemoList)
   }
 
 
