@@ -130,7 +130,10 @@ const createWindow = async () => {
       [CountPage.LunarVis]: ["isMoonVisible"],
     };
     try {
-      let sql = `SELECT ${page === CountPage.Call ? dateData[dateDisplay] + " AS date" : countParamList[page]}, Animals.subspecies AS animalName, SUM(callCount) AS callCount
+      let sql = `SELECT 
+                  ${page === CountPage.Call ? dateData[dateDisplay] + " AS date" : countParamList[page]}, 
+                  Animals.subspecies AS animalName, 
+                  SUM(callCount) AS callCount
                 FROM
 	                CallData
 	                JOIN Calls ON Calls.callData = CallData.id
@@ -138,26 +141,6 @@ const createWindow = async () => {
                 GROUP BY
 	                ${countParamList[page]}, Animals.subspecies
                 ORDER BY ${countParamList[page]} DESC;`
-      event.returnValue = await  dataSource.query(sql);
-    } catch (err) {
-      throw err;
-    }
-  });
-
-  ipcMain.on('get-dateDemographics', async (event: any, args: {dateDisplay: DateDisplay, param?: object}) => {
-    const {dateDisplay, param} = args;
-    
-
-    try {
-      let sql = `SELECT 
-                  ${dateData[dateDisplay]} AS date, Animals.subspecies AS animalName, SUM(callCount) AS callCount
-                FROM
-	                CallData
-	                JOIN Calls ON Calls.callData = CallData.id
-	                JOIN Animals ON Animals.id = Calls.animal
-                GROUP BY
-	                ${dateData[dateDisplay]}, Animals.subspecies
-                ORDER BY ${dateData[dateDisplay]} DESC`
       event.returnValue = await  dataSource.query(sql);
     } catch (err) {
       throw err;
