@@ -196,11 +196,6 @@ const createWindow = async () => {
     }
   });
 
-  
-
-  // END Lunar Queries
-
-  
   // mainWindow.loadFile(path.join(__dirname, '../renderer/main_window/index.html'));
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
