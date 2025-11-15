@@ -3,8 +3,7 @@ import { app, BrowserWindow, ipcMain } from "electron";
 import { getDataSource } from "./data/dbConnect";
 import { Animals } from "./data/animal.schema";
 import { Locations } from "./data/location.schema";
-import { CountPage, DateDisplay } from "./react/types";
-import { SimpleConsoleLogger } from "typeorm";
+import { CallDataInterface, CountPage, DateDisplay } from "./react/types";
 
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
@@ -115,15 +114,13 @@ const createWindow = async () => {
 
 
   // // Call queries
-
-
-
-  const adjustAnimalCallData = (data: [], headData: string) => {
-     const newList = [];
-    var currentObj = {};
+  
+  const adjustAnimalCallData = (data: {[headData]: boolean|string, animalName: string, callCount: number}[], headData: string) => {
+     const newList: CallDataInterface[] = [];
+    var currentObj: CallDataInterface = {};
     data.forEach((animalCall: {[headData]: boolean|string, animalName: string, callCount: number}) => {
-      if (currentObj?.[headData] !==  animalCall[headData]) {
-        if(Object.keys(currentObj).length > 0) {newList.push(currentObj)}
+      if (currentObj[headData] !==  animalCall[headData]) {
+        if(Object.keys(currentObj).length > 1) {newList.push(currentObj)}
         currentObj = { [headData]: animalCall[headData], total: 0};
       }
       const name = animalCall.animalName.replaceAll(" ", "");

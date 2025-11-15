@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { CountPage } from "../../../../types";
+import { CallDataInterface, CountPage } from "../../../../types";
 
 export const useLunarVisibilityPageViewModel = () => {
   const [lunarCount, setLunarCount] = useState([]);
   const [animalList, setAnimalList] = useState([]);
 
-  const updateVisibleStatus = (data: []): any[] => {
-    const newMap = []
+  const updateVisibleStatus = (data: CallDataInterface[]): any[] => {
+    const newMap: CallDataInterface[] = []
     data.forEach((item) => {
       let newItem = structuredClone(item);
       newItem.isMoonVisible = item.isMoonVisible ? "visible" : "not visible";
