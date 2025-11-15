@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Animals } from "../../data/animal.schema";
-import { Locations } from "../../data/location.schema";
+import { Animals } from "../../../../data/animal.schema";
+import { Locations } from "../../../../data/location.schema";
 
 interface ListItemProps {
   item: Animals | Locations,

@@ -9,10 +9,10 @@ const NavBar = () => {
             <Link to="/main_window">Home</Link>
           </li>
           <li>
-            <Link to="/main_window/animals">Animals</Link>
+            <Link to="lunar_phase">Lunar Phase</Link>
           </li>
           <li>
-            <Link to="/main_window/locations">Locations</Link>
+            <Link to="lunar_visibility">Lunar Visibility</Link>
           </li>
         </ul>
       </nav>

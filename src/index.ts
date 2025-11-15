@@ -3,9 +3,12 @@ import { app, BrowserWindow, ipcMain } from "electron";
 import { getDataSource } from "./data/dbConnect";
 import { Animals } from "./data/animal.schema";
 import { Locations } from "./data/location.schema";
+import { CallDataInterface, CountPage, DateDisplay } from "./react/types";
+
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+
 
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -111,33 +114,54 @@ const createWindow = async () => {
 
 
   // // Call queries
-  ipcMain.on('get-callCounts', async (event: any) => {
-    try {
-      let sql = `SELECT  
-                  strftime('%Y', date) AS date, SUM(Calls.callCount) AS callCount
-                FROM
-	                callData
-	                JOIN Calls ON CallData.id=Calls.callData
-                GROUP BY 
-	                strftime('%Y', date);`
-      event.returnValue = await  dataSource.query(sql);
-    } catch (err) {
-      throw err;
-    }
-  });
+  
+  const adjustAnimalCallData = (data: {[headData]: boolean|string, animalName: string, callCount: number}[], headData: string) => {
+     const newList: CallDataInterface[] = [];
+    var currentObj: CallDataInterface = {};
+    data.forEach((animalCall: {[headData]: boolean|string, animalName: string, callCount: number}) => {
+      if (currentObj[headData] !==  animalCall[headData]) {
+        if(Object.keys(currentObj).length > 1) {newList.push(currentObj)}
+        currentObj = { [headData]: animalCall[headData], total: 0};
+      }
+      const name = animalCall.animalName.replaceAll(" ", "");
+      currentObj[name] = animalCall.callCount;
+      currentObj.total += animalCall.callCount;
+      
+    });
+    newList.push(currentObj);
+    return newList;
 
-  ipcMain.on('get-callYearDemographics', async (event: any) => {
+  }
+
+  ipcMain.on('get-callCount', async (event: any, args: {page: CountPage, dateDisplay?: DateDisplay, param?: object}) => {
+    const {page, dateDisplay, param} = args;
+    const dateData = {
+      [DateDisplay.Year]: ["strftime('%Y', date)"],
+      [DateDisplay.Month]: [""],
+      [DateDisplay.Week]: [""],
+      [DateDisplay.Day]: [""],
+    };
+
+    const countParamList = {
+      [CountPage.Call]: [dateData[dateDisplay]],
+      [CountPage.LunarPhase]: ["moonPhase"],
+      [CountPage.LunarVis]: ["isMoonVisible"],
+    };
     try {
       let sql = `SELECT 
-                  strftime('%Y', date) AS date, Animals.subspecies AS animalName, SUM(callCount) AS callCount
+                  ${page === CountPage.Call ? dateData[dateDisplay] + " AS date" : countParamList[page]}, 
+                  Animals.subspecies AS animalName, 
+                  SUM(callCount) AS callCount
                 FROM
 	                CallData
 	                JOIN Calls ON Calls.callData = CallData.id
 	                JOIN Animals ON Animals.id = Calls.animal
                 GROUP BY
-	                strftime('%Y', date), Animals.subspecies
-                ORDER BY strftime('%Y', date) DESC`
-      event.returnValue = await  dataSource.query(sql);
+	                ${countParamList[page]}, Animals.subspecies
+                ORDER BY ${countParamList[page]} DESC;`
+      const data = await  dataSource.query(sql);
+      const adjustedData = adjustAnimalCallData(data, page === CountPage.Call ? "date" : countParamList[page][0])
+      event.returnValue = adjustedData; 
     } catch (err) {
       throw err;
     }
@@ -172,7 +196,6 @@ const createWindow = async () => {
     }
   });
 
-  
   // mainWindow.loadFile(path.join(__dirname, '../renderer/main_window/index.html'));
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 

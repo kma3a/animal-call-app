@@ -2,20 +2,22 @@
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 
 interface BodyRowsProps {
-  data: {date: string},
+  data: {total: number},
 }
 
 interface TableDisplayProps {
-  data: {date: string}[],
+  data: {total: number}[],
   animalList: {name: string}[],
+  firstCell: {title: string, key: string}
 }
 
-const TableDisplay = ({data, animalList}: TableDisplayProps) => {
+const TableDisplay = ({data, animalList, firstCell}: TableDisplayProps) => {
 
   const BodyRows = ({data}: BodyRowsProps) => {
     return <TableRow>
-      <TableCell>{data.date}</TableCell>
+      <TableCell>{data[firstCell.key]}</TableCell>
       {animalList.map((animal) => <TableCell align="right">{data[animal.name.replaceAll(" ", "")] | 0}</TableCell>)}
+      <TableCell>{data.total}</TableCell>
   
     </TableRow>;
   }
@@ -25,9 +27,10 @@ const TableDisplay = ({data, animalList}: TableDisplayProps) => {
         <TableHead>
           <TableRow>
             <TableCell>
-              Date
+              {firstCell.title}
             </TableCell>
             { animalList.map((animal) => <TableCell align="right">{animal.name}</TableCell>)}
+            <TableCell>Total</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
