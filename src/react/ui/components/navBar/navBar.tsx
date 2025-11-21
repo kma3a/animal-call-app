@@ -34,7 +34,7 @@ const NavBar = () => {
 
   return (
     <Box component="ul" sx={styles.navBar}>
-        { navList.map((item) => <NavLink href={item.href} label={item.label} />)}
+        { navList.map((item, index) => <NavLink href={item.href} label={item.label} key={index} />)}
     </Box>
   )
 };

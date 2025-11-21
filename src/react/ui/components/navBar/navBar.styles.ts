@@ -8,7 +8,7 @@ const styles = {
   },
   navItem: {
     display: "inline-block",
-    margin: 1,
+    margin: 2,
   },
 };
 
