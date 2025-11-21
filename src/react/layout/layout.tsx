@@ -1,7 +1,7 @@
 import { css } from '@emotion/react'
 import { Outlet } from "react-router-dom";
 import { theme } from "../styles/theme";
-import NavBar from "./navBar/navBar";
+import NavBar from "../ui/components/navBar/navBar";
 
 const menuItem = css`
   background-color: ${theme.background};
