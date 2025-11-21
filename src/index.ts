@@ -27,13 +27,12 @@ const createWindow = async () => {
   
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    height: 600,
-    width: 800,
     webPreferences: {
       contextIsolation: true,
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
     }
   });
+  mainWindow.maximize();
   
   // Animal queries
   const animalRepo = dataSource.getRepository(Animals);
