@@ -1,5 +1,6 @@
 
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import styles from './tableDisplay.styles';
 
 interface BodyRowsProps {
   data: {total: number},
@@ -23,7 +24,7 @@ const TableDisplay = ({data, animalList, firstCell}: TableDisplayProps) => {
   }
 
   return <>
-    <Table>
+    <Table sx={styles.table}>
         <TableHead>
           <TableRow>
             <TableCell>
