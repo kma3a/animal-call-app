@@ -11,5 +11,7 @@ export const theme = {
   background: colors.jet,
   primary: colors.sandy,
   secondary: colors.darkCyan,
+  tertiary: colors.cream,
+  quaternary: colors.lavender, 
 
 }

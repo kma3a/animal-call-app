@@ -6,10 +6,15 @@ const styles = {
     height: "100%",
     margin: 0,
   },
-  navItem: {
+  navList: {
     display: "inline-block",
     margin: 2,
   },
+  navItem: {
+    color: theme.tertiary,
+
+  },
+
 };
 
 export default styles;
